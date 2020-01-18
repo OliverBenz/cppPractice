@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdio.h>
+#include <vector>
 
 using namespace std;
 
@@ -23,6 +24,7 @@ void bitWiseBasics(int a) {
 
 	cout << endl;
 
+	// Size of int
 	cout << "The number is " << sizeof(a) << " Bytes long" << endl;
 }
 
@@ -61,34 +63,36 @@ void bitManipulation() {
 	cout << (int)bm.reg << " - " << (bm.sw1 > 0 ? 1 : 0) << endl;
 }
 
-#include <vector>
 
 
 
 // ---------- Testing 3 ----------
+// Namespace testing
 // All sorting algorithms in own sort namespace
-namespace obSort {
-	template <typename T>
-	vector<T> bubble(vector<T> vals) {
-		if (vals.size() == 1) return vals;
+namespace ob {
+	namespace sort {
+		template <typename T>
+		vector<T> bubble(vector<T> vals) {
+			if (vals.size() == 1) return vals;
 
-		for (size_t i = 0; i < vals.size(); i++)
-			for (size_t j = 0; j < vals.size() - 1; j++)
-				if (vals[j] > vals[i])
-					swap(vals[i], vals[j]);
-		return vals;
-	}
+			for (size_t i = 0; i < vals.size(); i++)
+				for (size_t j = 0; j < vals.size() - 1; j++)
+					if (vals[j] > vals[i])
+						swap(vals[i], vals[j]);
+			return vals;
+		}
 
-	// Preferred bubble sort using pointers
-	template <typename T>
-	void bubble(vector<T>* vals) {
-		if (vals->size() == 1) return;
+		// Preferred bubble sort using pointers
+		template <typename T>
+		void bubble(vector<T>* vals) {
+			if (vals->size() == 1) return;
 
-		for (size_t i = 0; i < vals->size(); i++)
-			for (size_t j = 0; j < vals->size() - 1; j++)
-				if (vals->at(j) > vals->at(i))
-					swap(vals->at(i), vals->at(j));
-	}
+			for (size_t i = 0; i < vals->size(); i++)
+				for (size_t j = 0; j < vals->size() - 1; j++)
+					if (vals->at(j) > vals->at(i))
+						swap(vals->at(i), vals->at(j));
+		}
+	};
 };
 
 // Setup and print result
@@ -96,8 +100,8 @@ void sortTest() {
 	vector<int> iTest = { 99, 10, 40, 5 };
 	vector<float> fTest = { 99.5f, 10.11867f, 99.33f, 5.01f };
 
-	iTest = obSort::bubble(iTest);
-	obSort::bubble(&fTest);
+	iTest = ob::sort::bubble<int>(iTest);
+	ob::sort::bubble<float>(&fTest);
 
 	cout << "Integer Array at Memory Adress: " << &iTest << " -> ";
 	for (auto& i : iTest) cout << i << "  ";
@@ -106,8 +110,41 @@ void sortTest() {
 	cout << "Float Array at Memory Adress: " << &fTest << " -> ";
 	for (auto& i : fTest) cout << i << "  ";
 	cout << endl;
+
+	iTest.clear(); fTest.clear();
 }
 
+
+
+// ---------- Testing 4 ----------
+namespace ob {
+	template <class T>
+	class Pair {
+	public:
+		T first;
+		T second;
+
+		Pair(T f, T s) {
+			first = f;
+			second = s;
+		}
+	};
+	template <typename T>
+	ob::Pair<T> make_pair(T one, T two) {
+		return ob::Pair<T>(one, two);
+	}
+};
+
+void classTest() {
+	// Pair
+	ob::Pair<int>* pair = new ob::Pair<int>(1, 5);
+	cout << pair->first << " - " << pair->second << endl;
+	delete pair;
+
+	vector<ob::Pair<float>> vPair;
+	vPair.push_back(ob::make_pair<float>(2.666f, 12.999f));
+	for (auto& i : vPair) cout << i.first << " - " << i.second << endl;
+}
 
 
 
@@ -123,7 +160,7 @@ int main(){
 	sortTest();
 
 	cout << endl << "---------- Test 4 ----------" << endl;
-
+	classTest();
 
 	cout << endl;  return 0;
 }
