@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <vector>
+#include <cstdarg> // For variadic functions
 
 using namespace std;
 
@@ -148,6 +149,24 @@ void classTest() {
 
 
 
+// ---------- Testing 5 ----------
+template <typename T>
+T variaSum(int count, ...) {
+	va_list numbers;
+	va_start(numbers, count);
+
+	T sum = 0;
+	for (size_t i = 0; i < count; i++) {
+		sum += va_arg(numbers, T);
+	} 
+
+	va_end(numbers);
+	return sum;
+}
+
+
+
+
 // ---------- Main ----------
 int main(){
 	cout << "---------- Test 1 ----------" << endl;
@@ -161,6 +180,10 @@ int main(){
 
 	cout << endl << "---------- Test 4 ----------" << endl;
 	classTest();
+
+	cout << endl << "---------- Test 5 ----------" << endl;
+	cout << "Sum of 2 INT: " << variaSum<int>(2, 2, 4) << endl;
+	cout << "Sum of 4 DBL: " << variaSum<double>(4, 1.23, 1.56, 2.88, 5.89) << endl;
 
 	cout << endl;  return 0;
 }
