@@ -7,6 +7,7 @@ using namespace std;
 
 
 // ---------- Testing 1 ----------
+// Basic bitwise manipulation
 void bitWiseBasics(int a) {
 	// Multiplication
 	cout << "Double of " << a << " is: " << (a << 1) << endl;
@@ -30,8 +31,8 @@ void bitWiseBasics(int a) {
 }
 
 
-
 // ---------- Testing 2 ----------
+// Bitmap class
 const uint8_t SW1_BM = 0b00000010;
 
 // A custom 8 bit variable with
@@ -63,8 +64,6 @@ void bitManipulation() {
 	// Error -> why bm.sw1 = 0
 	cout << (int)bm.reg << " - " << (bm.sw1 > 0 ? 1 : 0) << endl;
 }
-
-
 
 
 // ---------- Testing 3 ----------
@@ -116,8 +115,8 @@ void sortTest() {
 }
 
 
-
 // ---------- Testing 4 ----------
+// Template testing
 namespace ob {
 	template <class T>
 	class Pair {
@@ -148,8 +147,8 @@ void classTest() {
 }
 
 
-
 // ---------- Testing 5 ----------
+// Variable parametercount functions
 template <typename T>
 T variaSum(int count, ...) {
 	va_list numbers;
@@ -158,12 +157,32 @@ T variaSum(int count, ...) {
 	T sum = 0;
 	for (size_t i = 0; i < count; i++) {
 		sum += va_arg(numbers, T);
-	} 
+	}
 
 	va_end(numbers);
 	return sum;
 }
 
+void variableParamsTest() {
+	cout << "Sum of 2 INT: " << variaSum<int>(2, 2, 4) << endl;
+	cout << "Sum of 4 DBL: " << variaSum<double>(4, 1.23, 1.56, 2.88, 5.89) << endl;
+}
+
+
+// ---------- Testing 6 ----------
+// Macros
+#define deb(v) cout << #v << ": " << v << endl
+#define max(a, b) ((a > b) ? a : b)
+
+#define even(v) (v & 1 ? false : true)
+#define printBool(v) cout << #v << " is even: " << (even(v) ? "True" : "False") << endl;
+
+void macros() {
+	int x = 12, y = 13;
+	deb(x);
+	deb(max(x, y));
+	printBool(y);
+}
 
 
 
@@ -182,8 +201,12 @@ int main(){
 	classTest();
 
 	cout << endl << "---------- Test 5 ----------" << endl;
-	cout << "Sum of 2 INT: " << variaSum<int>(2, 2, 4) << endl;
-	cout << "Sum of 4 DBL: " << variaSum<double>(4, 1.23, 1.56, 2.88, 5.89) << endl;
+	variableParamsTest();
 
+	cout << endl << "---------- Test 6 ----------" << endl;
+	macros();
+
+	//cout << endl << "---------- Test 7 ----------" << endl;
+	
 	cout << endl;  return 0;
 }
