@@ -1,8 +1,8 @@
-/x64
-bitwise.vcxproj
-bitwise.vcxproj.filters
-bitwise.vcxproj.user
+# Files
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
 
-cppPractice.vcxproj
-cppPractice.vcxproj.filters
-cppPractice.vcxproj.user
+# Directories
+/x64
+.idea/
